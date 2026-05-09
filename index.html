@@ -125,9 +125,9 @@
     .sc-num.purple { color: var(--purple); }
     .sc-lbl { font-size: 0.35rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
     #middle-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .vs-txt   { font-size: 0.45rem; color: var(--muted); }
-    .lead-txt { font-size: 0.65rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
-    .diff-num { font-size: 0.45rem; color: var(--text); }
+    .vs-txt   { font-size: 0.85rem; color: var(--muted); }
+    .lead-txt { font-size: 1.0rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
+    .diff-num { font-size: 0.85rem; color: var(--text); }
     #prog-wrap { width: 100%; height: 34px; border: 3px solid var(--text); display: flex; overflow: hidden; }
     #bar-orange { height: 100%; background: var(--orange-bar); display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; transition: width .18s ease; min-width: 0; }
     #bar-purple { height: 100%; background: var(--purple-bar); flex: 1; display: flex; align-items: center; padding-left: 8px; min-width: 0; }
@@ -347,16 +347,16 @@
      ── รูปแบบ: { start: 'YYYY-MM-DDTHH:MM:SS+07:00', end: 'YYYY-MM-DDTHH:MM:SS+07:00' }
   ════════════════════════════════════════════════ */
   const ROUNDS = [
-    { start: '2026-05-09T00:00:00+07:00', end: '2026-05-09T23:59:00+07:00' }, // Round TEST (วันนี้)
-    { start: '2025-05-10T00:00:00+07:00', end: '2025-05-11T20:15:00+07:00' }, // Round 1
-    { start: '2025-05-17T19:00:00+07:00', end: '2025-05-18T20:15:00+07:00' }, // Round 2
-    { start: '2025-05-24T19:00:00+07:00', end: '2025-05-25T20:15:00+07:00' }, // Round 3
-    { start: '2025-05-31T19:00:00+07:00', end: '2025-06-01T20:15:00+07:00' }, // Round 4
-    { start: '2025-06-07T19:00:00+07:00', end: '2025-06-08T20:15:00+07:00' }, // Round 5
-    { start: '2025-06-14T19:00:00+07:00', end: '2025-06-15T20:15:00+07:00' }, // Round 6
-    { start: '2025-06-21T19:00:00+07:00', end: '2025-06-22T20:15:00+07:00' }, // Round 7
-    { start: '2025-06-28T19:00:00+07:00', end: '2025-06-29T20:15:00+07:00' }, // Round 8
-    { start: '2025-07-05T19:00:00+07:00', end: '2025-07-06T20:15:00+07:00' }, // Round 9
+    { start: '2026-05-10T00:00:00+07:00', end: '2026-05-11T23:59:00+07:00' }, // Round TEST (วันนี้-พรุ่งนี้)
+    { start: '2026-05-17T20:15:00+07:00', end: '2026-05-18T20:15:00+07:00' }, // Round 1
+    { start: '2026-05-24T20:15:00+07:00', end: '2026-05-25T20:15:00+07:00' }, // Round 2
+    { start: '2026-05-31T20:15:00+07:00', end: '2026-06-01T20:15:00+07:00' }, // Round 3
+    { start: '2026-06-07T20:15:00+07:00', end: '2026-06-08T20:15:00+07:00' }, // Round 4
+    { start: '2026-06-14T20:15:00+07:00', end: '2026-06-15T20:15:00+07:00' }, // Round 5
+    { start: '2026-06-21T20:15:00+07:00', end: '2026-06-22T20:15:00+07:00' }, // Round 6
+    { start: '2026-06-28T20:15:00+07:00', end: '2026-06-29T20:15:00+07:00' }, // Round 7
+    { start: '2026-07-05T20:15:00+07:00', end: '2026-07-06T20:15:00+07:00' }, // Round 8
+    { start: '2026-07-12T20:15:00+07:00', end: '2026-07-13T20:15:00+07:00' }, // Round 9
   ];
   const TOTAL_ROUNDS = ROUNDS.length;
 
@@ -424,21 +424,27 @@
     roundHistory = [];
     const now = Date.now();
     for (let i = 0; i < ROUNDS.length; i++) {
-      if (now < ts(ROUNDS[i].end)) break; // not ended yet
+      if (now < ts(ROUNDS[i].end)) break; // round not ended yet
       const snap = await get(roundRef(i + 1));
       const d    = snap.val() || {};
       const o = d.orange || 0, p = d.purple || 0;
       let winner = d.winner;
-      // Finalize only if there were actual clicks
-      if (!winner && (o > 0 || p > 0)) {
-        winner = o > p ? 'orange' : p > o ? 'purple' : 'tie';
-        await set(ref(db, `war/rounds/round${i+1}/winner`), winner);
-        await set(ref(db, `war/rounds/round${i+1}/orange`), o);
-        await set(ref(db, `war/rounds/round${i+1}/purple`), p);
-      }
-      // Only add to history if winner is known
-      if (winner) {
-        roundHistory.push({ round: i+1, winner, orange: o, purple: p });
+      if (!winner) {
+        // No winner saved yet — only finalize if real clicks happened
+        if (o > 0 || p > 0) {
+          winner = o > p ? 'orange' : p > o ? 'purple' : 'tie';
+          await set(ref(db, `war/rounds/round${i+1}/winner`), winner);
+          await set(ref(db, `war/rounds/round${i+1}/orange`), o);
+          await set(ref(db, `war/rounds/round${i+1}/purple`), p);
+          roundHistory.push({ round: i+1, winner, orange: o, purple: p });
+        }
+        // 0-0 no winner = nobody played this round, skip it
+      } else {
+        // Winner already in Firebase — only include if score > 0 (filter bad old data)
+        if (o > 0 || p > 0) {
+          roundHistory.push({ round: i+1, winner, orange: o, purple: p });
+        }
+        // winner exists but 0-0 = corrupt data from old bug, skip
       }
     }
   }
