@@ -9,177 +9,88 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --orange: #C87200;
-      --orange-bg: #FEF3DC;
-      --orange-bar: #F5A623;
-      --orange-border: #A85E00;
-      --purple: #3D34A0;
-      --purple-bg: #EEEDFE;
-      --purple-bar: #7B72E0;
-      --purple-border: #2E278A;
-      --bg: #EDECE5;
-      --card: #FAFAF7;
-      --border: #C8C8BE;
-      --text: #18180F;
-      --muted: #7A7A70;
-      --green: #4A7A10;
-      --red: #B03020;
+      --orange: #C87200; --orange-bg: #FEF3DC; --orange-bar: #F5A623; --orange-border: #A85E00;
+      --purple: #3D34A0; --purple-bg: #EEEDFE; --purple-bar: #7B72E0; --purple-border: #2E278A;
+      --bg: #EDECE5; --card: #FAFAF7; --border: #C8C8BE;
+      --text: #18180F; --muted: #7A7A70; --green: #4A7A10; --red: #B03020;
       --pixel: 'Press Start 2P', monospace;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
-      font-family: var(--pixel);
-      background: var(--bg);
+      font-family: var(--pixel); background: var(--bg);
       background-image:
         repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(0,0,0,0.025) 31px, rgba(0,0,0,0.025) 32px),
         repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(0,0,0,0.025) 31px, rgba(0,0,0,0.025) 32px);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      gap: 0.75rem;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 1rem; gap: 0.75rem;
     }
 
     /* ── Header ── */
-    #header {
-      width: 100%;
-      max-width: 540px;
-      text-align: center;
-    }
-    .title-eyebrow {
-      font-size: 0.42rem;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .title-main {
-      font-size: 0.95rem;
-      color: var(--text);
-      line-height: 1.5;
-    }
-    .title-main em {
-      font-style: normal;
-      color: var(--orange);
-    }
-    .title-main strong {
-      color: var(--purple);
-    }
+    #header { width: 100%; max-width: 540px; text-align: center; }
+    .title-eyebrow { font-size: 0.42rem; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .title-main { font-size: 0.95rem; color: var(--text); line-height: 1.5; }
+    .title-main em { font-style: normal; color: var(--orange); }
+    .title-main strong { color: var(--purple); }
     .title-divider {
-      width: 100%;
-      height: 4px;
-      margin: 8px 0 5px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--orange) 0px, var(--orange) 12px,
-        var(--text)   12px, var(--text)   14px,
-        var(--purple) 14px, var(--purple) 26px,
-        var(--text)   26px, var(--text)   28px
-      );
+      width: 100%; height: 4px; margin: 8px 0 5px;
+      background: repeating-linear-gradient(90deg,
+        var(--orange) 0px, var(--orange) 12px, var(--text) 12px, var(--text) 14px,
+        var(--purple) 14px, var(--purple) 26px, var(--text) 26px, var(--text) 28px);
     }
-    .title-sub {
-      font-size: 0.37rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+    .title-sub { font-size: 0.37rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
     /* ── Card ── */
-    #app {
-      background: var(--card);
-      border: 3px solid var(--text);
-      box-shadow: 6px 6px 0 var(--text);
-      padding: 1.5rem 1.25rem;
-      width: 100%;
-      max-width: 540px;
-    }
+    #app { background: var(--card); border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--text); padding: 1.5rem 1.25rem; width: 100%; max-width: 540px; }
 
     /* ── Connection ── */
-    #connect-status {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      font-size: 0.38rem;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-    .dot {
-      width: 8px; height: 8px;
-      border: 2px solid var(--muted);
-      background: #ccc;
-      flex-shrink: 0;
-    }
+    #connect-status { display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 0.38rem; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.07em; }
+    .dot { width: 8px; height: 8px; border: 2px solid var(--muted); background: #ccc; flex-shrink: 0; }
     .dot.online  { background: var(--green); border-color: var(--green); }
     .dot.offline { background: var(--red);   border-color: var(--red);   }
 
+    /* ── Round pip tracker ── */
+    #round-tracker { display: flex; justify-content: center; gap: 5px; margin-bottom: 1.1rem; flex-wrap: wrap; }
+    .round-pip {
+      width: 24px; height: 24px; border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.28rem; color: var(--muted);
+    }
+    .round-pip.done-orange { background: var(--orange-bg); border-color: var(--orange-border); }
+    .round-pip.done-purple { background: var(--purple-bg); border-color: var(--purple-border); }
+    .round-pip.done-tie    { background: #f0f0e8; border-color: var(--border); }
+    .round-pip.active      { border-color: var(--text); color: var(--text); background: #fff; box-shadow: 2px 2px 0 var(--text); }
+    .round-pip.upcoming    { opacity: 0.4; }
+
+    /* ── Waiting screen ── */
+    #wait-screen { display: none; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+    #wait-screen.show { display: flex; }
+    .wait-title { font-size: 0.55rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .wait-round { font-size: 0.65rem; color: var(--text); }
+    .wait-date  { font-size: 0.38rem; color: var(--muted); line-height: 2.2; }
+    #wait-countdown { font-size: 0.75rem; color: var(--orange); }
+    .wait-hint { font-size: 0.33rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; line-height: 2; }
+
     /* ── Select screen ── */
-    #select-screen { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
-
+    #select-screen { display: none; flex-direction: column; align-items: center; gap: 1.1rem; }
+    #select-screen.show { display: flex; }
     .sel-row { display: flex; gap: 12px; width: 100%; }
-
     .sel-card {
-      flex: 1;
-      padding: 1.5rem 0.75rem;
-      border: 3px solid var(--border);
-      background: var(--card);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      transition: transform .08s, box-shadow .08s;
-      box-shadow: 3px 3px 0 var(--border);
+      flex: 1; padding: 1.5rem 0.75rem; border: 3px solid var(--border); background: var(--card);
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 12px;
+      transition: transform .08s, box-shadow .08s; box-shadow: 3px 3px 0 var(--border);
     }
-    .sel-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--border);
-    }
-    .sel-card.active-orange {
-      border-color: var(--orange-border);
-      background: var(--orange-bg);
-      transform: translate(-3px, -3px);
-      box-shadow: 5px 5px 0 var(--orange-border);
-    }
-    .sel-card.active-purple {
-      border-color: var(--purple-border);
-      background: var(--purple-bg);
-      transform: translate(-3px, -3px);
-      box-shadow: 5px 5px 0 var(--purple-border);
-    }
-
+    .sel-card:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--border); }
+    .sel-card.active-orange { border-color: var(--orange-border); background: var(--orange-bg); transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--orange-border); }
+    .sel-card.active-purple { border-color: var(--purple-border); background: var(--purple-bg); transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--purple-border); }
     .sel-emoji { font-size: 2.4rem; line-height: 1.2; display: block; }
-    .sel-dept  { font-size: 0.38rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
-    .sel-name  { font-size: 0.6rem;  color: var(--text); }
+    .sel-name  { font-size: 0.6rem; color: var(--text); }
     .sel-count { font-size: 0.38rem; color: var(--muted); }
-
-    .hint {
-      font-size: 0.37rem;
-      color: var(--muted);
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      line-height: 2;
-    }
-
+    .hint { font-size: 0.37rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.07em; line-height: 2; }
     #start-btn {
-      font-family: var(--pixel);
-      font-size: 0.58rem;
-      padding: 12px 2rem;
-      border: 3px solid var(--text);
-      background: var(--text);
-      color: #FAFAF7;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      box-shadow: 4px 4px 0 var(--muted);
-      transition: transform .07s, box-shadow .07s;
+      font-family: var(--pixel); font-size: 0.58rem; padding: 12px 2rem;
+      border: 3px solid var(--text); background: var(--text); color: #FAFAF7;
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;
+      box-shadow: 4px 4px 0 var(--muted); transition: transform .07s, box-shadow .07s;
     }
     #start-btn:disabled { opacity: 0.32; cursor: not-allowed; box-shadow: none; }
     #start-btn:not(:disabled):hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--muted); }
@@ -188,17 +99,24 @@
     /* ── Game screen ── */
     #game-screen { display: none; flex-direction: column; align-items: center; gap: 1rem; }
     #game-screen.show { display: flex; }
-
-    #online-row {
-      display: flex; gap: 10px;
-      font-size: 0.36rem; color: var(--muted);
-      justify-content: center;
-      text-transform: uppercase; letter-spacing: 0.06em;
+    #round-bar { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 0.37rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    #round-label { color: var(--text); font-size: 0.38rem; }
+    #timer-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    #timer-lbl  { font-size: 0.3rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    #timer-val  { font-size: 0.65rem; color: var(--text); }
+    #timer-val.urgent { color: var(--red); animation: blink .5s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    #back-btn {
+      font-family: var(--pixel); font-size: 0.36rem; padding: 7px 0.9rem;
+      border: 2px solid var(--border); background: var(--card); color: var(--muted);
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.07em;
+      box-shadow: 2px 2px 0 var(--border); transition: transform .07s, box-shadow .07s;
     }
+    #back-btn:hover  { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); color: var(--text); }
+    #back-btn:active { transform: translate(2px,2px);   box-shadow: 0px 0px 0 var(--border); }
+    #online-row { display: flex; gap: 10px; font-size: 0.36rem; color: var(--muted); justify-content: center; text-transform: uppercase; letter-spacing: 0.06em; }
     .online-pill { display: flex; align-items: center; gap: 5px; }
     .sep { color: var(--border); }
-
-    /* scores */
     #score-row { width: 100%; display: flex; justify-content: space-between; align-items: center; }
     .sc-box { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 90px; }
     .sc-emoji { font-size: 1.4rem; line-height: 1; }
@@ -206,111 +124,78 @@
     .sc-num.orange { color: var(--orange); }
     .sc-num.purple { color: var(--purple); }
     .sc-lbl { font-size: 0.35rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
-
     #middle-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .vs-txt   { font-size: 0.85rem; color: var(--muted); }
     .lead-txt { font-size: 0.35rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
     .diff-num { font-size: 0.65rem; color: var(--text); }
-
-    /* progress bar */
-    #prog-wrap {
-      width: 100%;
-      height: 34px;
-      border: 3px solid var(--text);
-      display: flex;
-      overflow: hidden;
-    }
-    #bar-orange {
-      height: 100%;
-      background: var(--orange-bar);
-      display: flex; align-items: center; justify-content: flex-end;
-      padding-right: 8px;
-      transition: width .18s ease;
-      min-width: 0;
-    }
-    #bar-purple {
-      height: 100%;
-      background: var(--purple-bar);
-      flex: 1;
-      display: flex; align-items: center;
-      padding-left: 8px;
-      min-width: 0;
-    }
+    #prog-wrap { width: 100%; height: 34px; border: 3px solid var(--text); display: flex; overflow: hidden; }
+    #bar-orange { height: 100%; background: var(--orange-bar); display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; transition: width .18s ease; min-width: 0; }
+    #bar-purple { height: 100%; background: var(--purple-bar); flex: 1; display: flex; align-items: center; padding-left: 8px; min-width: 0; }
     .bp { font-size: 0.38rem; color: #fff; white-space: nowrap; }
-
-    /* arena */
     #arena { width: 100%; display: flex; gap: 8px; justify-content: center; align-items: center; }
     .click-zone { flex: 1; max-width: 195px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .zone-lbl { font-size: 0.36rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
     .zone-cps { font-size: 0.36rem; color: var(--muted); }
-
     .big-btn {
-      width: 126px; height: 126px;
-      font-size: 3.2rem; line-height: 1;
+      width: 126px; height: 126px; font-size: 3.2rem; line-height: 1;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      border: 4px solid var(--border);
-      background: var(--card);
-      user-select: none; -webkit-user-select: none;
-      touch-action: manipulation;
-      box-shadow: 5px 5px 0 var(--border);
-      transition: transform .06s, box-shadow .06s;
+      cursor: pointer; border: 4px solid var(--border); background: var(--card);
+      user-select: none; -webkit-user-select: none; touch-action: manipulation;
+      box-shadow: 5px 5px 0 var(--border); transition: transform .06s, box-shadow .06s;
     }
     .big-btn.b-orange { border-color: var(--orange-border); background: var(--orange-bg); box-shadow: 5px 5px 0 var(--orange-border); }
     .big-btn.b-purple { border-color: var(--purple-border); background: var(--purple-bg); box-shadow: 5px 5px 0 var(--purple-border); }
     .big-btn:active { transform: translate(4px,4px) !important; }
     .big-btn.b-orange:active { box-shadow: 1px 1px 0 var(--orange-border) !important; }
     .big-btn.b-purple:active { box-shadow: 1px 1px 0 var(--purple-border) !important; }
-    .big-btn.disabled {
-      opacity: 0.28;
-      cursor: not-allowed;
-      filter: grayscale(60%);
-      pointer-events: none;
-    }
-
-    #back-btn {
-      font-family: var(--pixel);
-      font-size: 0.42rem;
-      padding: 8px 1.2rem;
-      border: 2px solid var(--border);
-      background: var(--card);
-      color: var(--muted);
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      box-shadow: 3px 3px 0 var(--border);
-      transition: transform .07s, box-shadow .07s;
-      align-self: flex-start;
-    }
-    #back-btn:hover  { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--border); color: var(--text); }
-    #back-btn:active { transform: translate(2px,2px);   box-shadow: 1px 1px 0 var(--border); }
-
+    .big-btn.disabled { opacity: 0.28; cursor: not-allowed; filter: grayscale(60%); pointer-events: none; }
     #vs-mid { font-size: 0.65rem; color: var(--muted); }
+    #tip { font-size: 0.36rem; color: var(--muted); text-align: center; min-height: 1.2em; text-transform: uppercase; letter-spacing: 0.08em; }
+    .pop { position: fixed; pointer-events: none; font-family: var(--pixel); font-size: 0.6rem; z-index: 999; animation: popUp .65s ease-out forwards; }
+    @keyframes popUp { 0% { opacity:1; transform:translateY(0) scale(1); } 100% { opacity:0; transform:translateY(-50px) scale(1.4); } }
 
-    #tip {
-      font-size: 0.36rem; color: var(--muted);
-      text-align: center; min-height: 1.2em;
-      text-transform: uppercase; letter-spacing: 0.08em;
-    }
+    /* ── Round-end screen ── */
+    #round-end { display: none; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+    #round-end.show { display: flex; }
+    .re-eyebrow { font-size: 0.38rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+    .re-winner  { font-size: 1.4rem; line-height: 1.4; white-space: pre-line; }
+    .re-winner.orange { color: var(--orange); }
+    .re-winner.purple { color: var(--purple); }
+    .re-winner.tie    { color: var(--muted); }
+    .re-scores { font-size: 0.38rem; color: var(--muted); line-height: 2.2; }
+    .re-scores b { color: var(--text); }
+    #series-tally { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 8px 0; border-top: 2px dashed var(--border); border-bottom: 2px dashed var(--border); }
+    .tally-block { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .tally-num { font-size: 1.1rem; }
+    .tally-num.orange { color: var(--orange); }
+    .tally-num.purple { color: var(--purple); }
+    .tally-lbl { font-size: 0.3rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+    .sb-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.34rem; padding: 5px 0; border-bottom: 1px dashed var(--border); color: var(--muted); }
+    .sb-row:last-child { border-bottom: none; }
+    .sb-rnd { min-width: 64px; }
+    .sb-winner.orange { color: var(--orange); }
+    .sb-winner.purple { color: var(--purple); }
 
-    /* float pop */
-    .pop {
-      position: fixed; pointer-events: none;
-      font-family: var(--pixel); font-size: 0.6rem;
-      z-index: 999;
-      animation: popUp .65s ease-out forwards;
-    }
-    @keyframes popUp {
-      0%   { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-50px) scale(1.4); }
-    }
+    /* ── Game-over screen ── */
+    #game-over { display: none; flex-direction: column; align-items: center; gap: 1.1rem; text-align: center; }
+    #game-over.show { display: flex; }
+    .go-title  { font-size: 0.55rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .go-winner { font-size: 1.5rem; line-height: 1.5; white-space: pre-line; }
+    .go-winner.orange { color: var(--orange); }
+    .go-winner.purple { color: var(--purple); }
+    .go-winner.tie    { color: var(--muted); }
+    .go-sub { font-size: 0.38rem; color: var(--muted); line-height: 2.2; }
 
-    /* footer */
-    #footer {
-      font-size: 0.34rem; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.09em;
-      text-align: center;
+    .action-btn {
+      font-family: var(--pixel); font-size: 0.52rem; padding: 11px 1.8rem;
+      border: 3px solid var(--text); background: var(--text); color: #FAFAF7;
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;
+      box-shadow: 4px 4px 0 var(--muted); transition: transform .07s, box-shadow .07s;
     }
+    .action-btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--muted); }
+    .action-btn:active { transform: translate(3px,3px);   box-shadow: 1px 1px 0 var(--muted); }
+
+    #footer { font-size: 0.34rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; text-align: center; }
 
     @media (max-width: 420px) {
       .big-btn { width: 104px; height: 104px; font-size: 2.8rem; }
@@ -322,50 +207,64 @@
 <body>
 
 <div id="header">
-  <div class="title-eyebrow">🏢 Office Edition</div>
-  <div class="title-main">
-    <em>Enemies</em> With <strong>Benefits</strong><br>CLICK WAR
-  </div>
+  <div class="title-eyebrow">🏢 Syntara Office Edition</div>
+  <div class="title-main"><em>Enemies</em> With <strong>Benefits</strong><br>CLICK WAR</div>
   <div class="title-divider"></div>
-  <div class="title-sub">Sales 🦊 vs Accounting 🐯 </div>
+  <div class="title-sub">Sales 🦊 vs Accounting 🐯</div>
 </div>
 
 <div id="app">
 
   <div id="connect-status">
     <span class="dot" id="conn-dot"></span>
-    <span id="conn-txt">Connecting to Firebase...</span>
+    <span id="conn-txt">Connecting...</span>
   </div>
 
-  <!-- SELECT SCREEN -->
+  <div id="round-tracker"></div>
+
+  <!-- ══ WAITING SCREEN (between rounds) ══ -->
+  <div id="wait-screen">
+    <div class="wait-title">⏳ Next Round</div>
+    <div class="wait-round" id="wait-round-label"> 2 / 10</div>
+    <div class="wait-date"  id="wait-date-label"></div>
+    <div id="wait-countdown">--:--:--</div>
+    <div class="wait-hint">Come back when the next round starts!<br>Results from previous rounds are saved.</div>
+    <div id="wait-series-board" style="width:100%;margin-top:0.5rem"></div>
+  </div>
+
+  <!-- ══ SELECT SCREEN ══ -->
   <div id="select-screen">
     <div class="sel-row">
       <div class="sel-card" id="sc-orange" onclick="selectTeam('orange')">
         <span class="sel-emoji">🦊</span>
         <span class="sel-name">Sales</span>
-        <span class="sel-count" id="lbl-orange-total">0 total clicks</span>
+        <span class="sel-count" id="lbl-orange-total">0 clicks</span>
       </div>
       <div class="sel-card" id="sc-purple" onclick="selectTeam('purple')">
         <span class="sel-emoji">🐯</span>
         <span class="sel-name">Accounting</span>
-        <span class="sel-count" id="lbl-purple-total">0 total clicks</span>
+        <span class="sel-count" id="lbl-purple-total">0 clicks</span>
       </div>
     </div>
     <p class="hint">Choose your team &amp; click as fast as you can.<br>Scores sync live across all devices.</p>
-    <button id="start-btn" disabled onclick="startGame()">▶ &nbsp;Start Battle</button>
+    <button id="start-btn" disabled onclick="startGame()">▶ &nbsp;Join Battle</button>
   </div>
 
-  <!-- GAME SCREEN -->
+  <!-- ══ GAME SCREEN ══ -->
   <div id="game-screen">
-
-    <button id="back-btn" onclick="goBack()">◀ Change Team</button>
-
+    <div id="round-bar">
+      <span id="round-label">Round 1 / 9</span>
+      <div id="timer-wrap">
+        <span id="timer-lbl">Time left</span>
+        <span id="timer-val">24:00:00</span>
+      </div>
+      <button id="back-btn" onclick="goBack()">◀ Team</button>
+    </div>
     <div id="online-row">
       <span class="online-pill">🦊 <span id="online-orange">—</span> clicks</span>
       <span class="sep">|</span>
       <span class="online-pill">🐯 <span id="online-purple">—</span> clicks</span>
     </div>
-
     <div id="score-row">
       <div class="sc-box">
         <span class="sc-emoji">🦊</span>
@@ -383,33 +282,54 @@
         <span class="sc-lbl" id="lbl-p2">Accounting</span>
       </div>
     </div>
-
     <div id="prog-wrap">
       <div id="bar-orange" style="width:50%"><span class="bp" id="pct-orange">50%</span></div>
       <div id="bar-purple"><span class="bp" id="pct-purple">50%</span></div>
     </div>
-
     <div id="arena">
       <div class="click-zone">
         <span class="zone-lbl">🦊 Sales Team</span>
-        <div class="big-btn b-orange" id="btn-orange"
-          onpointerdown="doClick('orange', event)"
-          oncontextmenu="return false">🦊</div>
+        <div class="big-btn b-orange" id="btn-orange" onpointerdown="doClick('orange',event)" oncontextmenu="return false">🦊</div>
         <span class="zone-cps" id="cps-orange">0 cps</span>
       </div>
-
       <span id="vs-mid">VS</span>
-
       <div class="click-zone">
         <span class="zone-lbl">🐯 Acct Team</span>
-        <div class="big-btn b-purple" id="btn-purple"
-          onpointerdown="doClick('purple', event)"
-          oncontextmenu="return false">🐯</div>
+        <div class="big-btn b-purple" id="btn-purple" onpointerdown="doClick('purple',event)" oncontextmenu="return false">🐯</div>
         <span class="zone-cps" id="cps-purple">0 cps</span>
       </div>
     </div>
-
     <div id="tip">Keep clicking!</div>
+  </div>
+
+  <!-- ══ ROUND-END SCREEN ══ -->
+  <div id="round-end">
+    <div class="re-eyebrow" id="re-eyebrow">Round 1  — Result</div>
+    <div class="re-winner"  id="re-winner">🦊</div>
+    <div class="re-scores"  id="re-scores"></div>
+    <div id="series-tally">
+      <div class="tally-block">
+        <span class="tally-num orange" id="tally-orange">0</span>
+        <span class="tally-lbl">🦊 Sales wins</span>
+      </div>
+      <div class="tally-block">
+        <span style="font-size:0.36rem;color:var(--muted)">SERIES</span>
+      </div>
+      <div class="tally-block">
+        <span class="tally-num purple" id="tally-purple">0</span>
+        <span class="tally-lbl">Acct wins 🐯</span>
+      </div>
+    </div>
+    <div id="series-board" style="width:100%"></div>
+    <button class="action-btn" id="next-round-btn" onclick="afterRoundEnd()">▶ Next Round</button>
+  </div>
+
+  <!-- ══ GAME-OVER SCREEN ══ -->
+  <div id="game-over">
+    <div class="go-title">⚔️ Series Complete ⚔️</div>
+    <div class="go-winner" id="go-winner"></div>
+    <div class="go-sub"    id="go-sub"></div>
+    <div id="series-board-final" style="width:100%"></div>
   </div>
 
 </div>
@@ -417,10 +337,32 @@
 <div id="footer">No bots · No timers · Just clicks · Powered by littlebaecon @littlebaechu_</div>
 
 <script type="module">
-  import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, onValue, runTransaction }
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, onValue, runTransaction, set, get }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+  /* ════════════════════════════════════════════════
+     ROUND SCHEDULE
+     ── ต้องการเพิ่มรอบ: เพิ่ม object ต่อท้าย array นี้
+     ── รูปแบบ: { start: 'YYYY-MM-DDTHH:MM:SS+07:00', end: 'YYYY-MM-DDTHH:MM:SS+07:00' }
+  ════════════════════════════════════════════════ */
+  const ROUNDS = [
+    { start: '2025-05-09T10:15:00+07:00', end: '2025-05-09T11:00:00+07:00' }, // Round Test
+     { start: '2025-05-09T10:15:00+07:00', end: '2025-05-11T20:15:00+07:00' }, // Round 1
+    { start: '2025-05-17T19:00:00+07:00', end: '2025-05-18T20:15:00+07:00' }, // Round 2
+    { start: '2025-05-24T19:00:00+07:00', end: '2025-05-25T20:15:00+07:00' }, // Round 3
+    { start: '2025-05-31T19:00:00+07:00', end: '2025-06-01T20:15:00+07:00' }, // Round 4
+    { start: '2025-06-07T19:00:00+07:00', end: '2025-06-08T20:15:00+07:00' }, // Round 5
+    { start: '2025-06-14T19:00:00+07:00', end: '2025-06-15T20:15:00+07:00' }, // Round 6
+    { start: '2025-06-21T19:00:00+07:00', end: '2025-06-22T20:15:00+07:00' }, // Round 7
+    { start: '2025-06-28T19:00:00+07:00', end: '2025-06-29T20:15:00+07:00' }, // Round 8
+    { start: '2025-07-05T19:00:00+07:00', end: '2025-07-06T20:15:00+07:00' }, // Round 9
+    // เพิ่มรอบได้ที่นี่ เช่น:
+    // { start: '2025-07-12T20:15:00+07:00', end: '2025-07-13T20:15:00+07:00' }, // Round 10
+  ];
+  const TOTAL_ROUNDS = ROUNDS.length;
+
+  /* ── Firebase ── */
   const firebaseConfig = {
     apiKey:            "AIzaSyCm6loEaD9jyVefd545mAJrBiZi7cnyB0E",
     authDomain:        "enimies-with-benefits.firebaseapp.com",
@@ -430,91 +372,376 @@
     messagingSenderId: "728726854685",
     appId:             "1:728726854685:web:00925f9f9e571e2d4afaf4"
   };
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
 
-  const app       = initializeApp(firebaseConfig);
-  const db        = getDatabase(app);
-  const orangeRef = ref(db, 'popcat/orange');
-  const purpleRef = ref(db, 'popcat/purple');
+  const scoreRef = (r, t) => ref(db, `war/rounds/round${r}/${t}`);
+  const roundRef = (r)    => ref(db, `war/rounds/round${r}`);
 
-  let globalScore = { orange: 0, purple: 0 };
-  let recent      = { orange: [], purple: [] };
-  let started     = false;
-  let myTeam      = null;
+  /* ── Helpers ── */
+  const pad   = n => String(n).padStart(2, '0');
+  const $     = id => document.getElementById(id);
+  const ts    = s  => new Date(s).getTime();   // ISO string → epoch ms
 
+  /* ── State ── */
+  let globalScore  = { orange: 0, purple: 0 };
+  let roundHistory = [];
+  let recent       = { orange: [], purple: [] };
+  let started      = false;
+  let myTeam       = null;
+  let roundEnded   = false;
+  let timerInterval  = null;
+  let waitInterval   = null;
+  let cpsInterval    = null;
+  let unsubOrange    = null;
+  let unsubPurple    = null;
+
+  /* ── Connection ── */
   function setConn(ok) {
-    document.getElementById('conn-dot').className   = 'dot ' + (ok ? 'online' : 'offline');
-    document.getElementById('conn-txt').textContent = ok ? 'Firebase connected' : 'Offline';
+    $('conn-dot').className   = 'dot ' + (ok ? 'online' : 'offline');
+    $('conn-txt').textContent = ok ? 'Firebase connected' : 'Offline';
   }
 
-  onValue(orangeRef, snap => {
-    globalScore.orange = snap.val() || 0;
-    document.getElementById('lbl-orange-total').textContent = globalScore.orange.toLocaleString() + ' total clicks';
-    document.getElementById('online-orange').textContent    = globalScore.orange.toLocaleString();
-    updateUI(); setConn(true);
-  }, () => setConn(false));
+  /* ── Determine current state from schedule ── */
+  function getScheduleState() {
+    const now = Date.now();
 
-  onValue(purpleRef, snap => {
-    globalScore.purple = snap.val() || 0;
-    document.getElementById('lbl-purple-total').textContent = globalScore.purple.toLocaleString() + ' total clicks';
-    document.getElementById('online-purple').textContent    = globalScore.purple.toLocaleString();
-    updateUI();
-  });
+    // Find active round (now is within start–end)
+    for (let i = 0; i < ROUNDS.length; i++) {
+      const s = ts(ROUNDS[i].start), e = ts(ROUNDS[i].end);
+      if (now >= s && now < e) return { phase: 'active', roundIndex: i };
+    }
 
+    // Find upcoming round (now < start of round)
+    for (let i = 0; i < ROUNDS.length; i++) {
+      if (now < ts(ROUNDS[i].start)) return { phase: 'waiting', roundIndex: i };
+    }
+
+    // All rounds ended
+    return { phase: 'finished', roundIndex: ROUNDS.length - 1 };
+  }
+
+  /* ── Load history for all past rounds ── */
+  async function loadHistory() {
+    roundHistory = [];
+    const now = Date.now();
+    for (let i = 0; i < ROUNDS.length; i++) {
+      if (now < ts(ROUNDS[i].end)) break; // not ended yet
+      const snap = await get(roundRef(i + 1));
+      const d    = snap.val() || {};
+      // Auto-finalize if winner not yet saved
+      let winner = d.winner;
+      if (!winner) {
+        const o = d.orange || 0, p = d.purple || 0;
+        winner = o > p ? 'orange' : p > o ? 'purple' : 'tie';
+        await set(ref(db, `war/rounds/round${i+1}/winner`), winner);
+        await set(ref(db, `war/rounds/round${i+1}/orange`), o);
+        await set(ref(db, `war/rounds/round${i+1}/purple`), p);
+      }
+      roundHistory.push({ round: i+1, winner, orange: d.orange||0, purple: d.purple||0 });
+    }
+  }
+
+  /* ── Subscribe live to a round's scores ── */
+  function subscribeToRound(r) {
+    if (unsubOrange) unsubOrange();
+    if (unsubPurple) unsubPurple();
+    unsubOrange = onValue(scoreRef(r, 'orange'), snap => {
+      globalScore.orange = snap.val() || 0;
+      $('lbl-orange-total').textContent = globalScore.orange.toLocaleString() + ' clicks';
+      $('online-orange').textContent    = globalScore.orange.toLocaleString();
+      updateGameUI(); setConn(true);
+    }, () => setConn(false));
+    unsubPurple = onValue(scoreRef(r, 'purple'), snap => {
+      globalScore.purple = snap.val() || 0;
+      $('lbl-purple-total').textContent = globalScore.purple.toLocaleString() + ' clicks';
+      $('online-purple').textContent    = globalScore.purple.toLocaleString();
+      updateGameUI();
+    });
+  }
+
+  /* ── Render pip dots ── */
+  function renderPips(activeIndex) {
+    const wrap = $('round-tracker');
+    wrap.innerHTML = '';
+    const now = Date.now();
+    for (let i = 0; i < ROUNDS.length; i++) {
+      const pip  = document.createElement('div');
+      const past = roundHistory.find(h => h.round === i + 1);
+      if (past) {
+        pip.className   = 'round-pip done-' + past.winner;
+        pip.textContent = past.winner === 'orange' ? '🦊' : past.winner === 'purple' ? '🐯' : '=';
+      } else if (i === activeIndex) {
+        pip.className   = 'round-pip active';
+        pip.textContent = i + 1;
+      } else {
+        pip.className   = 'round-pip upcoming';
+        pip.textContent = i + 1;
+      }
+      wrap.appendChild(pip);
+    }
+  }
+
+  /* ── Format date nicely (TH locale) ── */
+  function fmtDate(isoStr) {
+    const d = new Date(isoStr);
+    return d.toLocaleString('th-TH', {
+      day: 'numeric', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok'
+    });
+  }
+
+  /* ── Countdown string from ms remaining ── */
+  function fmtCountdown(ms) {
+    if (ms <= 0) return '00:00:00';
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+
+  /* ── Hide all content screens ── */
+  function hideAllScreens() {
+    $('wait-screen').style.display   = 'none';
+    $('select-screen').classList.remove('show');
+    $('game-screen').classList.remove('show');
+    $('round-end').classList.remove('show');
+    $('game-over').classList.remove('show');
+  }
+
+  /* ════════════════════════════════════════════
+     BOOTSTRAP — decide which screen to show
+  ════════════════════════════════════════════ */
+  async function bootstrap() {
+    try {
+      await loadHistory();
+      const state = getScheduleState();
+      renderPips(state.roundIndex);
+
+      if (state.phase === 'waiting') {
+        showWaitScreen(state.roundIndex);
+      } else if (state.phase === 'active') {
+        subscribeToRound(state.roundIndex + 1);
+        showSelectScreen(state.roundIndex);
+      } else {
+        showGameOverScreen();
+      }
+      setConn(true);
+    } catch(e) {
+      console.error(e); setConn(false);
+    }
+  }
+
+  /* ════ WAITING SCREEN ════ */
+  function showWaitScreen(nextIndex) {
+    hideAllScreens();
+    $('wait-screen').style.display = 'flex';
+
+    const roundNum = nextIndex + 1;
+    $('wait-round-label').textContent = `Round ${roundNum} / ${TOTAL_ROUNDS}`;
+    $('wait-date-label').innerHTML =
+      `Starts: <b>${fmtDate(ROUNDS[nextIndex].start)}</b>`;
+
+    buildSeriesBoard('wait-series-board');
+
+    if (waitInterval) clearInterval(waitInterval);
+    waitInterval = setInterval(() => {
+      const remaining = ts(ROUNDS[nextIndex].start) - Date.now();
+      $('wait-countdown').textContent = fmtCountdown(remaining);
+      if (remaining <= 0) {
+        clearInterval(waitInterval);
+        bootstrap(); // re-check — round may have started
+      }
+    }, 1000);
+  }
+
+  /* ════ SELECT SCREEN ════ */
+  function showSelectScreen(roundIndex) {
+    hideAllScreens();
+    $('select-screen').classList.add('show');
+    $('start-btn').disabled = true;
+    $('sc-orange').className = 'sel-card';
+    $('sc-purple').className = 'sel-card';
+    $('lbl-p1').textContent  = 'Sales';
+    $('lbl-p2').textContent  = 'Accounting';
+    myTeam = null; started = false;
+  }
+
+  /* ════ GAME SCREEN ════ */
+  window.startGame = function() {
+    const state = getScheduleState();
+    if (state.phase !== 'active') { bootstrap(); return; }
+
+    hideAllScreens();
+    $('game-screen').classList.add('show');
+    started    = true;
+    roundEnded = false;
+
+    const ri = state.roundIndex;
+    $('round-label').textContent = `Round ${ri+1} / ${TOTAL_ROUNDS}`;
+
+    const opponent = myTeam === 'orange' ? 'purple' : 'orange';
+    $('btn-' + opponent).classList.add('disabled');
+    $('btn-' + myTeam).classList.remove('disabled');
+
+    startGameTimer(ri);
+    if (!cpsInterval) cpsInterval = setInterval(updateCps, 500);
+  };
+
+  function startGameTimer(roundIndex) {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      const remaining = ts(ROUNDS[roundIndex].end) - Date.now();
+      const tv = $('timer-val');
+      tv.textContent = fmtCountdown(remaining);
+      tv.className   = remaining < 60000 ? 'urgent' : '';
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        handleRoundEnd(roundIndex);
+      }
+    }, 1000);
+  }
+
+  /* ════ HANDLE ROUND END ════ */
+  async function handleRoundEnd(roundIndex) {
+    if (roundEnded) return;
+    roundEnded = true;
+    started    = false;
+    $('btn-orange').classList.add('disabled');
+    $('btn-purple').classList.add('disabled');
+
+    // Save winner to Firebase
+    const r = roundIndex + 1;
+    const snap = await get(ref(db, `war/rounds/round${r}/winner`));
+    if (!snap.val()) {
+      const o = globalScore.orange, p = globalScore.purple;
+      const w = o > p ? 'orange' : p > o ? 'purple' : 'tie';
+      await set(ref(db, `war/rounds/round${r}/winner`), w);
+      await set(ref(db, `war/rounds/round${r}/orange`), o);
+      await set(ref(db, `war/rounds/round${r}/purple`), p);
+    }
+
+    await loadHistory();
+    renderPips(roundIndex);
+    showRoundEndScreen(roundIndex);
+  }
+
+  /* ════ ROUND-END SCREEN ════ */
+  function showRoundEndScreen(roundIndex) {
+    hideAllScreens();
+    $('round-end').classList.add('show');
+
+    const last = roundHistory.find(h => h.round === roundIndex + 1);
+    if (!last) return;
+
+    $('re-eyebrow').textContent = `Round ${last.round} / ${TOTAL_ROUNDS} — Result`;
+
+    const rw = $('re-winner');
+    if (last.winner === 'orange') { rw.textContent = '🦊\nSales Wins!';        rw.className = 're-winner orange'; }
+    else if (last.winner === 'purple') { rw.textContent = '🐯\nAccounting Wins!'; rw.className = 're-winner purple'; }
+    else                          { rw.textContent = "🤝\nIt's a Tie!";       rw.className = 're-winner tie';    }
+
+    $('re-scores').innerHTML =
+      `🦊 Sales: <b>${last.orange.toLocaleString()}</b> clicks<br>` +
+      `🐯 Acct: <b>${last.purple.toLocaleString()}</b> clicks`;
+
+    const ow = roundHistory.filter(h => h.winner === 'orange').length;
+    const pw = roundHistory.filter(h => h.winner === 'purple').length;
+    $('tally-orange').textContent = ow;
+    $('tally-purple').textContent = pw;
+    buildSeriesBoard('series-board');
+
+    const isLast = roundIndex >= TOTAL_ROUNDS - 1;
+    $('next-round-btn').textContent = isLast ? '🏆 Final Results' : '▶ See Next Round';
+  }
+
+  /* ── Called when user taps "Next Round" / "Final Results" ── */
+  window.afterRoundEnd = function() {
+    const state = getScheduleState();
+    if (state.phase === 'finished') { showGameOverScreen(); return; }
+    if (state.phase === 'active')   { showSelectScreen(state.roundIndex); subscribeToRound(state.roundIndex + 1); renderPips(state.roundIndex); return; }
+    // waiting for next round
+    showWaitScreen(state.roundIndex);
+    renderPips(state.roundIndex);
+  };
+
+  /* ════ GAME-OVER SCREEN ════ */
+  function showGameOverScreen() {
+    hideAllScreens();
+    $('game-over').classList.add('show');
+
+    const ow = roundHistory.filter(h => h.winner === 'orange').length;
+    const pw = roundHistory.filter(h => h.winner === 'purple').length;
+    const gw = $('go-winner');
+    if (ow > pw) { gw.textContent = '🦊\nSales\nWins the Series!';       gw.className = 'go-winner orange'; }
+    else if (pw > ow) { gw.textContent = '🐯\nAccounting\nWins the Series!'; gw.className = 'go-winner purple'; }
+    else               { gw.textContent = "🤝\nThe Series\nis a Draw!";        gw.className = 'go-winner tie';    }
+
+    $('go-sub').innerHTML =
+      `🦊 Sales: ${ow} round wins · ${TOTAL_ROUNDS - ow - pw} draws<br>` +
+      `🐯 Accounting: ${pw} round wins`;
+
+    buildSeriesBoard('series-board-final');
+  }
+
+  /* ════ SERIES BOARD ════ */
+  function buildSeriesBoard(elId) {
+    const el = $(elId);
+    el.innerHTML = '';
+    roundHistory.forEach(h => {
+      const row = document.createElement('div');
+      row.className = 'sb-row';
+      const winTxt = h.winner === 'orange' ? '🦊 Sales' : h.winner === 'purple' ? '🐯 Acct' : '🤝 Tie';
+      const winCls = h.winner === 'orange' ? 'orange' : h.winner === 'purple' ? 'purple' : '';
+      row.innerHTML =
+        `<span class="sb-rnd">Round ${h.round}</span>` +
+        `<span class="sb-winner ${winCls}">${winTxt}</span>` +
+        `<span>${h.orange.toLocaleString()} – ${h.purple.toLocaleString()}</span>`;
+      el.appendChild(row);
+    });
+  }
+
+  /* ════ SELECT TEAM ════ */
   window.selectTeam = function(t) {
     myTeam = t;
-    document.getElementById('sc-orange').className = 'sel-card' + (t === 'orange' ? ' active-orange' : '');
-    document.getElementById('sc-purple').className = 'sel-card' + (t === 'purple' ? ' active-purple' : '');
-    document.getElementById('start-btn').disabled  = false;
-    document.getElementById('lbl-p1').textContent  = t === 'orange' ? 'Sales (You)'  : 'Sales';
-    document.getElementById('lbl-p2').textContent  = t === 'purple' ? 'Acct (You)'   : 'Accounting';
+    $('sc-orange').className = 'sel-card' + (t === 'orange' ? ' active-orange' : '');
+    $('sc-purple').className = 'sel-card' + (t === 'purple' ? ' active-purple' : '');
+    $('start-btn').disabled  = false;
+    $('lbl-p1').textContent  = t === 'orange' ? 'Sales (You)' : 'Sales';
+    $('lbl-p2').textContent  = t === 'purple' ? 'Acct (You)'  : 'Accounting';
   };
 
-  window.startGame = function() {
-    document.getElementById('select-screen').style.display = 'none';
-    document.getElementById('game-screen').classList.add('show');
-    started = true;
-    // Disable the opposing team's button
-    const opponent = myTeam === 'orange' ? 'purple' : 'orange';
-    document.getElementById('btn-' + opponent).classList.add('disabled');
-    setInterval(updateCps, 500);
-  };
-
+  /* ════ GO BACK ════ */
   window.goBack = function() {
-    started = false;
-    myTeam  = null;
-    // Re-enable both buttons
-    document.getElementById('btn-orange').classList.remove('disabled');
-    document.getElementById('btn-purple').classList.remove('disabled');
-    // Reset team selection UI
-    document.getElementById('sc-orange').className = 'sel-card';
-    document.getElementById('sc-purple').className = 'sel-card';
-    document.getElementById('start-btn').disabled  = true;
-    document.getElementById('lbl-p1').textContent  = 'Sales';
-    document.getElementById('lbl-p2').textContent  = 'Accounting';
-    document.getElementById('game-screen').classList.remove('show');
-    document.getElementById('select-screen').style.display = '';
+    started = false; myTeam = null;
+    clearInterval(timerInterval);
+    $('btn-orange').classList.remove('disabled');
+    $('btn-purple').classList.remove('disabled');
+    const state = getScheduleState();
+    showSelectScreen(state.roundIndex);
   };
 
+  /* ════ DO CLICK ════ */
   window.doClick = function(team, e) {
-    if (!started) return;
-    if (team !== myTeam) return;  // only allow clicking own team
+    if (!started || roundEnded) return;
+    if (team !== myTeam) return;
+    const state = getScheduleState();
+    if (state.phase !== 'active') { handleRoundEnd(state.roundIndex); return; }
+
     recent[team].push(Date.now());
-    const cutoff = Date.now() - 1500;
-    recent[team] = recent[team].filter(x => x > cutoff);
-    runTransaction(team === 'orange' ? orangeRef : purpleRef, cur => (cur || 0) + 1);
+    recent[team] = recent[team].filter(x => Date.now() - x < 1500);
+    runTransaction(scoreRef(state.roundIndex + 1, team), cur => (cur || 0) + 1);
     spawnPop(e, team);
+
     if (Math.random() < 0.12) {
-      const tips = [
-        'Keep clicking!', "Don't stop!", 'Smash it!', 'You got this!',
-        'Faster!!', 'Go go go!', 'Close that deal!', 'Balance the clicks!',
-        'Into the spreadsheet!', 'Revenue goes up!'
-      ];
-      document.getElementById('tip').textContent = tips[Math.floor(Math.random() * tips.length)];
+      const tips = ['Keep clicking!', "Don't stop!", 'Smash it!', 'You got this!',
+        'Faster!!', 'Go go go!', 'Close that deal!', 'Into the spreadsheet!', 'Revenue goes up!'];
+      $('tip').textContent = tips[Math.floor(Math.random() * tips.length)];
     }
   };
 
   function spawnPop(e, team) {
-    const rect = document.getElementById('btn-' + team).getBoundingClientRect();
+    const rect = $('btn-' + team).getBoundingClientRect();
     const el   = document.createElement('div');
     el.className   = 'pop';
     el.textContent = '+1';
@@ -525,33 +752,34 @@
     setTimeout(() => el.remove(), 680);
   }
 
-  function updateUI() {
+  /* ════ UI UPDATES ════ */
+  function updateGameUI() {
     const o = globalScore.orange, p = globalScore.purple;
     const total = o + p || 1;
     const op = Math.round(o / total * 100);
-    const pp = 100 - op;
-
-    document.getElementById('s-orange').textContent   = o.toLocaleString();
-    document.getElementById('s-purple').textContent   = p.toLocaleString();
-    document.getElementById('bar-orange').style.width = op + '%';
-    document.getElementById('pct-orange').textContent = op + '%';
-    document.getElementById('pct-purple').textContent = pp + '%';
-
+    $('s-orange').textContent   = o.toLocaleString();
+    $('s-purple').textContent   = p.toLocaleString();
+    $('bar-orange').style.width = op + '%';
+    $('pct-orange').textContent = op + '%';
+    $('pct-purple').textContent = (100 - op) + '%';
     const diff = o - p;
-    document.getElementById('diff-num').textContent = Math.abs(diff).toLocaleString();
-    const lt = document.getElementById('lead-txt');
-    if (diff > 0)      { lt.textContent = '🦊 Sales leads';   lt.style.color = 'var(--orange)'; }
-    else if (diff < 0) { lt.textContent = '🐯 Acct leads';    lt.style.color = 'var(--purple)'; }
-    else               { lt.textContent = 'Tied';              lt.style.color = '';              }
+    $('diff-num').textContent = Math.abs(diff).toLocaleString();
+    const lt = $('lead-txt');
+    if (diff > 0)      { lt.textContent = '🦊 Sales leads';  lt.style.color = 'var(--orange)'; }
+    else if (diff < 0) { lt.textContent = '🐯 Acct leads';   lt.style.color = 'var(--purple)'; }
+    else               { lt.textContent = 'Tied';             lt.style.color = ''; }
   }
 
   function updateCps() {
     const now = Date.now();
     ['orange', 'purple'].forEach(t => {
       recent[t] = recent[t].filter(x => now - x < 2000);
-      document.getElementById('cps-' + t).textContent = (recent[t].length / 2).toFixed(1) + ' cps';
+      $('cps-' + t).textContent = (recent[t].length / 2).toFixed(1) + ' cps';
     });
   }
+
+  /* ── Start ── */
+  bootstrap();
 </script>
 </body>
 </html>
