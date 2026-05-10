@@ -202,6 +202,54 @@
       .sc-num  { font-size: 1.2rem; }
       .title-main { font-size: 0.72rem; }
     }
+
+    /* ── Results Modal ── */
+    #results-modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 999;
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    #results-modal.show { display: flex; }
+    .modal-box {
+      background: var(--card); border: 3px solid var(--text);
+      box-shadow: 8px 8px 0 var(--text);
+      padding: 1.4rem 1.2rem; width: 100%; max-width: 480px;
+      max-height: 85vh; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 0.9rem;
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-title { font-size: 0.5rem; color: var(--text); text-transform: uppercase; letter-spacing: 0.1em; }
+    .modal-close {
+      font-family: var(--pixel); font-size: 0.5rem;
+      background: none; border: 2px solid var(--border);
+      color: var(--muted); cursor: pointer; padding: 5px 10px;
+      box-shadow: 2px 2px 0 var(--border);
+    }
+    .modal-close:hover { border-color: var(--text); color: var(--text); }
+    .modal-empty { font-size: 0.38rem; color: var(--muted); text-align: center; padding: 1rem 0; line-height: 2.2; }
+    .modal-tally {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-top: 2px dashed var(--border); border-bottom: 2px dashed var(--border);
+    }
+    .mt-block { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .mt-num { font-size: 1rem; }
+    .mt-num.orange { color: var(--orange); }
+    .mt-num.purple { color: var(--purple); }
+    .mt-lbl { font-size: 0.28rem; color: var(--muted); text-transform: uppercase; }
+
+    /* Results button */
+    .results-btn {
+      font-family: var(--pixel); font-size: 0.42rem;
+      padding: 9px 1.2rem; border: 2px solid var(--border);
+      background: var(--card); color: var(--muted);
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em;
+      box-shadow: 3px 3px 0 var(--border); transition: transform .07s, box-shadow .07s;
+      width: 100%;
+    }
+    .results-btn:hover  { border-color: var(--text); color: var(--text); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--border); }
+    .results-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--border); }
   </style>
 </head>
 <body>
@@ -229,7 +277,6 @@
     <div class="wait-date"  id="wait-date-label"></div>
     <div id="wait-countdown">--:--:--</div>
     <div class="wait-hint">Come back when the next round starts!<br>Results from previous rounds are saved.</div>
-    <div id="wait-series-board" style="width:100%;margin-top:0.5rem"></div>
   </div>
 
   <!-- ══ SELECT SCREEN ══ -->
@@ -247,6 +294,7 @@
       </div>
     </div>
     <p class="hint">Choose your team &amp; click as fast as you can.<br>Scores sync live across all devices.</p>
+    <button class="results-btn" onclick="openResultsModal()">📊 Round Results</button>
     <button id="start-btn" disabled onclick="startGame()">▶ &nbsp;Join Battle</button>
   </div>
 
@@ -334,6 +382,33 @@
 
 </div>
 
+  <!-- ══ RESULTS MODAL ══ -->
+  <div id="results-modal" onclick="closeResultsModal(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title">📊 Round Results</span>
+        <button class="modal-close" onclick="closeResultsModal()">✕ Close</button>
+      </div>
+      <div id="modal-tally" class="modal-tally" style="display:none">
+        <div class="mt-block">
+          <span class="mt-num orange" id="modal-tally-orange">0</span>
+          <span class="mt-lbl"><img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:10px;height:10px;vertical-align:-1px;"> Sales wins</span>
+        </div>
+        <div class="mt-block">
+          <span style="font-size:0.34rem;color:var(--muted);">SERIES</span>
+        </div>
+        <div class="mt-block">
+          <span class="mt-num purple" id="modal-tally-purple">0</span>
+          <span class="mt-lbl">Acct wins <img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:10px;height:10px;vertical-align:-1px;"></span>
+        </div>
+      </div>
+      <div id="modal-board"></div>
+      <div id="modal-empty" class="modal-empty" style="display:none">
+        No results yet.<br>Come play first!
+      </div>
+    </div>
+  </div>
+
 <div id="footer"> · Made by littlebaecon @littlebaechu_ · Artworks by Marcy @awbymarcy ·</div>
 
 <script type="module">
@@ -347,17 +422,16 @@
      ── รูปแบบ: { start: 'YYYY-MM-DDTHH:MM:SS+07:00', end: 'YYYY-MM-DDTHH:MM:SS+07:00' }
   ════════════════════════════════════════════════ */
   const ROUNDS = [
-    { start: '2026-05-09T00:00:00+07:00', end: '2026-05-09T23:59:00+07:00' }, // Round TEST (วันนี้-พรุ่งนี้)
-    { start: '2026-05-10T00:00:00+07:00', end: '2026-05-11T23:59:00+07:00' }, // Round TEST (วันนี้-พรุ่งนี้)
-    { start: '2026-05-17T20:15:00+07:00', end: '2026-05-18T20:15:00+07:00' }, // Round 1
-    { start: '2026-05-24T20:15:00+07:00', end: '2026-05-25T20:15:00+07:00' }, // Round 2
-    { start: '2026-05-31T20:15:00+07:00', end: '2026-06-01T20:15:00+07:00' }, // Round 3
-    { start: '2026-06-07T20:15:00+07:00', end: '2026-06-08T20:15:00+07:00' }, // Round 4
-    { start: '2026-06-14T20:15:00+07:00', end: '2026-06-15T20:15:00+07:00' }, // Round 5
-    { start: '2026-06-21T20:15:00+07:00', end: '2026-06-22T20:15:00+07:00' }, // Round 6
-    { start: '2026-06-28T20:15:00+07:00', end: '2026-06-29T20:15:00+07:00' }, // Round 7
-    { start: '2026-07-05T20:15:00+07:00', end: '2026-07-06T20:15:00+07:00' }, // Round 8
-    { start: '2026-07-12T20:15:00+07:00', end: '2026-07-13T20:15:00+07:00' }, // Round 9
+    { start: '2026-05-09T00:00:00+07:00', end: '2026-05-09T23:59:00+07:00' }, // Round TEST (yesterday)
+    { start: '2026-05-10T19:45:00+07:00', end: '2026-05-11T19:45:00+07:00' }, // Round 1
+    { start: '2026-05-24T19:45:00+07:00', end: '2026-05-25T19:45:00+07:00' }, // Round 2
+    { start: '2026-05-31T19:45:00+07:00', end: '2026-06-01T19:45:00+07:00' }, // Round 3
+    { start: '2026-06-07T19:45:00+07:00', end: '2026-06-08T19:45:00+07:00' }, // Round 4
+    { start: '2026-06-14T19:45:00+07:00', end: '2026-06-15T19:45:00+07:00' }, // Round 5
+    { start: '2026-06-21T19:45:00+07:00', end: '2026-06-22T19:45:00+07:00' }, // Round 6
+    { start: '2026-06-28T19:45:00+07:00', end: '2026-06-29T19:45:00+07:00' }, // Round 7
+    { start: '2026-07-05T19:45:00+07:00', end: '2026-07-06T19:45:00+07:00' }, // Round 8
+    { start: '2026-07-12T19:45:00+07:00', end: '2026-07-13T19:45:00+07:00' }, // Round 9
   ];
   const TOTAL_ROUNDS = ROUNDS.length;
 
@@ -478,11 +552,18 @@
       const past = roundHistory.find(h => h.round === i + 1);
       if (past) {
         pip.className   = 'round-pip done-' + past.winner;
-        pip.innerHTML = past.winner === 'orange'
-        ? '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:14px;height:14px;object-fit:contain;">'
-        : past.winner === 'purple'
-        ? '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:14px;height:14px;object-fit:contain;">'
-        : '=';
+        if (past.winner === 'orange') {
+          pip.innerHTML = '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:14px;height:14px;object-fit:contain;">';
+        } else if (past.winner === 'purple') {
+          pip.innerHTML = '<img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:14px;height:14px;object-fit:contain;">';
+        } else {
+          // tie — show both
+          pip.innerHTML = '<img src="https://i.ibb.co/r27VRnQk/Fox.png" style="width:10px;height:10px;object-fit:contain;"><img src="https://i.ibb.co/G3TBF8v8/Tiger.png" style="width:10px;height:10px;object-fit:contain;">';
+          pip.style.gap = '1px';
+          pip.style.display = 'flex';
+          pip.style.alignItems = 'center';
+          pip.style.justifyContent = 'center';
+        }
       } else if (i === activeIndex) {
         pip.className   = 'round-pip active';
         pip.textContent = i + 1;
@@ -497,9 +578,10 @@
   /* ── Format date nicely (TH locale) ── */
   function fmtDate(isoStr) {
     const d = new Date(isoStr);
-    return d.toLocaleString('th-TH', {
+    return d.toLocaleString('en-GB', {
       day: 'numeric', month: 'short', year: 'numeric',
-      hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok'
+      hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok',
+      hour12: false
     });
   }
 
@@ -552,7 +634,7 @@
     const roundNum = nextIndex + 1;
     $('wait-round-label').textContent = `Round ${roundNum} / ${TOTAL_ROUNDS}`;
     $('wait-date-label').innerHTML =
-      `Starts: <b>${fmtDate(ROUNDS[nextIndex].start)}</b>`;
+      `Next Round: <b>${fmtDate(ROUNDS[nextIndex].start)}</b>`;
 
     buildSeriesBoard('wait-series-board');
 
@@ -791,6 +873,54 @@
 
   /* ── Start ── */
   bootstrap();
+
+  /* ── Results Modal ── */
+  window.openResultsModal = async function() {
+    await loadHistory();
+    const modal = document.getElementById('results-modal');
+    const board = document.getElementById('modal-board');
+    const empty = document.getElementById('modal-empty');
+    const tally = document.getElementById('modal-tally');
+
+    board.innerHTML = '';
+
+    if (roundHistory.length === 0) {
+      empty.style.display = 'block';
+      tally.style.display = 'none';
+    } else {
+      empty.style.display = 'none';
+      tally.style.display = 'flex';
+
+      const ow = roundHistory.filter(h => h.winner === 'orange').length;
+      const pw = roundHistory.filter(h => h.winner === 'purple').length;
+      document.getElementById('modal-tally-orange').textContent = ow;
+      document.getElementById('modal-tally-purple').textContent = pw;
+
+      const FOX   = 'https://i.ibb.co/r27VRnQk/Fox.png';
+      const TIGER = 'https://i.ibb.co/G3TBF8v8/Tiger.png';
+      roundHistory.forEach(h => {
+        const row = document.createElement('div');
+        row.className = 'sb-row';
+        const winTxt = h.winner === 'orange'
+          ? `<img src="${FOX}" style="width:10px;height:10px;vertical-align:-1px;"> Sales`
+          : h.winner === 'purple'
+          ? `<img src="${TIGER}" style="width:10px;height:10px;vertical-align:-1px;"> Acct`
+          : '🤝 Tie';
+        const winCls = h.winner === 'orange' ? 'orange' : h.winner === 'purple' ? 'purple' : '';
+        row.innerHTML = `<span class="sb-rnd">Round ${h.round}</span><span class="sb-winner ${winCls}">${winTxt}</span><span>${h.orange.toLocaleString()} – ${h.purple.toLocaleString()}</span>`;
+        board.appendChild(row);
+      });
+    }
+
+    modal.classList.add('show');
+  };
+
+  window.closeResultsModal = function(e) {
+    if (!e || e.target === document.getElementById('results-modal')) {
+      document.getElementById('results-modal').classList.remove('show');
+    }
+  };
+
 </script>
 </body>
 </html>
