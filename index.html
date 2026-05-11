@@ -125,9 +125,9 @@
     .sc-num.purple { color: var(--purple); }
     .sc-lbl { font-size: 0.35rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
     #middle-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .vs-txt   { font-size: 0.65rem; color: var(--muted); }
-    .lead-txt { font-size: 0.75rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
-    .diff-num { font-size: 0.65rem; color: var(--text); }
+    .vs-txt   { font-size: 0.45rem; color: var(--muted); }
+    .lead-txt { font-size: 0.65rem; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 0.05em; }
+    .diff-num { font-size: 0.45rem; color: var(--text); }
     #prog-wrap { width: 100%; height: 34px; border: 3px solid var(--text); display: flex; overflow: hidden; }
     #bar-orange { height: 100%; background: var(--orange-bar); display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; transition: width .18s ease; min-width: 0; }
     #bar-purple { height: 100%; background: var(--purple-bar); flex: 1; display: flex; align-items: center; padding-left: 8px; min-width: 0; }
@@ -354,7 +354,6 @@
       </div>
     </div>
     <p class="hint">Choose your team &amp; click as fast as you can.<br>Scores sync live across all devices.</p>
-    <button class="results-btn" onclick="openResultsModal()">📊 Round Results</button>
     <button id="start-btn" disabled onclick="startGame()">▶ &nbsp;Join Battle</button>
   </div>
 
@@ -446,7 +445,7 @@
   <div id="results-modal" onclick="closeResultsModal(event)">
     <div class="modal-box">
       <div class="modal-header">
-        <span class="modal-title">📊 Round Results</span>
+        <span class="modal-title"> Round Results</span>
         <button class="modal-close" onclick="closeResultsModal()">✕ Close</button>
       </div>
       <div id="modal-tally" class="modal-tally" style="display:none">
@@ -478,14 +477,14 @@
           <div class="sc-tally-row" id="sc-tally-row"></div>
           <div class="sc-divider"></div>
           <div class="sc-rows" id="sc-rows"></div>
-          <div class="sc-footer">#EnemiesWithBenefits #ClickWar #SyntaraOffice</div>
+          <div class="sc-footer">#EnemiesWithBenefits #JanJingjing </div>
         </div>
         <button class="share-x-btn" onclick="shareOnX()">𝕏 &nbsp;Post to X</button>
       </div>
     </div>
   </div>
 
-<button id="float-results-btn" onclick="openResultsModal()">📊 Results</button>
+<button id="float-results-btn" onclick="openResultsModal()"> Results</button>
 
 <div id="footer"> · Made by littlebaecon @littlebaechu_ · Artworks by Marcy @awbymarcy ·</div>
 
