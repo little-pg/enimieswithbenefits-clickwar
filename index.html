@@ -197,6 +197,19 @@
 
     #footer { font-size: 0.34rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; text-align: center; }
 
+    /* ── Floating Results Button ── */
+    #float-results-btn {
+      position: fixed; bottom: 1.2rem; right: 1.2rem; z-index: 900;
+      font-family: var(--pixel); font-size: 0.38rem;
+      padding: 10px 14px; border: 2px solid var(--text);
+      background: var(--card); color: var(--text);
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.07em;
+      box-shadow: 3px 3px 0 var(--text);
+      transition: transform .07s, box-shadow .07s;
+    }
+    #float-results-btn:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--text); }
+    #float-results-btn:active { transform: translate(2px,2px);   box-shadow: 1px 1px 0 var(--text); }
+
     @media (max-width: 420px) {
       .big-btn { width: 104px; height: 104px; font-size: 2.8rem; }
       .sc-num  { font-size: 1.2rem; }
@@ -238,6 +251,53 @@
     .mt-num.orange { color: var(--orange); }
     .mt-num.purple { color: var(--purple); }
     .mt-lbl { font-size: 0.28rem; color: var(--muted); text-transform: uppercase; }
+
+    /* ── Share Card Preview ── */
+    #share-card-wrap { display: none; flex-direction: column; align-items: center; gap: 0.7rem; width: 100%; }
+    #share-card-wrap.show { display: flex; }
+    #share-card {
+      width: 100%; background: #18180F; border: 3px solid #18180F;
+      padding: 1.1rem 1rem; font-family: var(--pixel); color: #FAFAF7;
+      box-shadow: 4px 4px 0 var(--border);
+    }
+    .sc-header { font-size: 0.32rem; color: #888; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .sc-title   { font-size: 0.62rem; margin-bottom: 12px; line-height: 1.6; }
+    .sc-divider { height: 2px; background: repeating-linear-gradient(90deg,#bd663e 0,#bd663e 10px,#18180F 10px,#18180F 12px,#f0d965 12px,#f0d965 22px,#18180F 22px,#18180F 24px); margin-bottom: 12px; }
+    .sc-rows    { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+    .sc-row     { display: flex; justify-content: space-between; font-size: 0.3rem; color: #aaa; padding: 3px 0; border-bottom: 1px solid #333; }
+    .sc-row:last-child { border-bottom: none; }
+    .sc-row .rnd  { color: #666; min-width: 56px; }
+    .sc-row .win  { }
+    .sc-row .win.orange { color: #bd663e; }
+    .sc-row .win.purple { color: #f0d965; }
+    .sc-footer  { font-size: 0.26rem; color: #555; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+    .sc-tally-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .sc-tally-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .sc-tally-num  { font-size: 0.9rem; }
+    .sc-tally-num.orange { color: #bd663e; }
+    .sc-tally-num.purple { color: #f0d965; }
+    .sc-tally-lbl  { font-size: 0.26rem; color: #888; text-transform: uppercase; }
+    .sc-vs         { font-size: 0.38rem; color: #555; }
+
+    .share-x-btn {
+      font-family: var(--pixel); font-size: 0.44rem;
+      padding: 10px 1.4rem; border: 3px solid #000;
+      background: #000; color: #fff;
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;
+      box-shadow: 3px 3px 0 var(--border);
+      transition: transform .07s, box-shadow .07s; width: 100%;
+    }
+    .share-x-btn:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--border); }
+    .share-x-btn:active { transform: translate(2px,2px);   box-shadow: 1px 1px 0 var(--border); }
+    .toggle-share-btn {
+      font-family: var(--pixel); font-size: 0.38rem;
+      padding: 8px 1rem; border: 2px solid var(--border);
+      background: var(--card); color: var(--muted);
+      cursor: pointer; text-transform: uppercase; letter-spacing: 0.07em;
+      box-shadow: 2px 2px 0 var(--border); width: 100%;
+      transition: transform .07s, box-shadow .07s;
+    }
+    .toggle-share-btn:hover { border-color: var(--text); color: var(--text); transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); }
 
     /* Results button */
     .results-btn {
@@ -406,8 +466,26 @@
       <div id="modal-empty" class="modal-empty" style="display:none">
         No results yet.<br>Come play first!
       </div>
+
+      <!-- Share Card Section -->
+      <button class="toggle-share-btn" id="toggle-share-btn" onclick="toggleShareCard()" style="display:none">
+        🐦 Share on X
+      </button>
+      <div id="share-card-wrap">
+        <div id="share-card">
+          <div class="sc-header">🏢 Syntara Office Edition · Click War</div>
+          <div class="sc-title" id="sc-title-txt">Enemies With Benefits</div>
+          <div class="sc-tally-row" id="sc-tally-row"></div>
+          <div class="sc-divider"></div>
+          <div class="sc-rows" id="sc-rows"></div>
+          <div class="sc-footer">#EnemiesWithBenefits #ClickWar #SyntaraOffice</div>
+        </div>
+        <button class="share-x-btn" onclick="shareOnX()">𝕏 &nbsp;Post to X</button>
+      </div>
     </div>
   </div>
+
+<button id="float-results-btn" onclick="openResultsModal()">📊 Results</button>
 
 <div id="footer"> · Made by littlebaecon @littlebaechu_ · Artworks by Marcy @awbymarcy ·</div>
 
@@ -424,6 +502,7 @@
   const ROUNDS = [
     { start: '2026-05-09T00:00:00+07:00', end: '2026-05-09T23:59:00+07:00' }, // Round TEST (yesterday)
     { start: '2026-05-10T19:45:00+07:00', end: '2026-05-11T19:45:00+07:00' }, // Round 1
+    { start: '2026-05-17T19:45:00+07:00', end: '2026-05-17T19:45:00+07:00' }, // Round 1
     { start: '2026-05-24T19:45:00+07:00', end: '2026-05-25T19:45:00+07:00' }, // Round 2
     { start: '2026-05-31T19:45:00+07:00', end: '2026-06-01T19:45:00+07:00' }, // Round 3
     { start: '2026-06-07T19:45:00+07:00', end: '2026-06-08T19:45:00+07:00' }, // Round 4
@@ -431,7 +510,6 @@
     { start: '2026-06-21T19:45:00+07:00', end: '2026-06-22T19:45:00+07:00' }, // Round 6
     { start: '2026-06-28T19:45:00+07:00', end: '2026-06-29T19:45:00+07:00' }, // Round 7
     { start: '2026-07-05T19:45:00+07:00', end: '2026-07-06T19:45:00+07:00' }, // Round 8
-    { start: '2026-07-12T19:45:00+07:00', end: '2026-07-13T19:45:00+07:00' }, // Round 9
   ];
   const TOTAL_ROUNDS = ROUNDS.length;
 
@@ -887,9 +965,11 @@
     if (roundHistory.length === 0) {
       empty.style.display = 'block';
       tally.style.display = 'none';
+      document.getElementById('toggle-share-btn').style.display = 'none';
     } else {
       empty.style.display = 'none';
       tally.style.display = 'flex';
+      document.getElementById('toggle-share-btn').style.display = 'block';
 
       const ow = roundHistory.filter(h => h.winner === 'orange').length;
       const pw = roundHistory.filter(h => h.winner === 'purple').length;
@@ -918,7 +998,91 @@
   window.closeResultsModal = function(e) {
     if (!e || e.target === document.getElementById('results-modal')) {
       document.getElementById('results-modal').classList.remove('show');
+      // reset share card
+      document.getElementById('share-card-wrap').classList.remove('show');
+      document.getElementById('toggle-share-btn').textContent = '🐦 Share on X';
     }
+  };
+
+  window.toggleShareCard = function() {
+    const wrap = document.getElementById('share-card-wrap');
+    const btn  = document.getElementById('toggle-share-btn');
+    if (wrap.classList.contains('show')) {
+      wrap.classList.remove('show');
+      btn.textContent = '🐦 Share on X';
+    } else {
+      buildShareCard();
+      wrap.classList.add('show');
+      btn.textContent = '✕ Hide Card';
+    }
+  };
+
+  function buildShareCard() {
+    const ow = roundHistory.filter(h => h.winner === 'orange').length;
+    const pw = roundHistory.filter(h => h.winner === 'purple').length;
+    const total = roundHistory.length;
+
+    // Title line
+    let titleTxt = 'Enemies With Benefits';
+    if (total > 0) {
+      if (ow > pw)      titleTxt = '🦊 Sales is dominating!';
+      else if (pw > ow) titleTxt = '🐯 Accounting fights back!';
+      else              titleTxt = '⚔️ It\'s neck and neck!';
+    }
+    document.getElementById('sc-title-txt').textContent = titleTxt;
+
+    // Tally row
+    const tallyRow = document.getElementById('sc-tally-row');
+    tallyRow.innerHTML = `
+      <div class="sc-tally-item">
+        <span class="sc-tally-num orange">${ow}</span>
+        <span class="sc-tally-lbl">🦊 Sales</span>
+      </div>
+      <span class="sc-vs">VS</span>
+      <div class="sc-tally-item">
+        <span class="sc-tally-num purple">${pw}</span>
+        <span class="sc-tally-lbl">🐯 Acct</span>
+      </div>`;
+
+    // Round rows
+    const rows = document.getElementById('sc-rows');
+    rows.innerHTML = '';
+    roundHistory.forEach(h => {
+      const winLabel = h.winner === 'orange' ? '🦊 Sales' : h.winner === 'purple' ? '🐯 Acct' : '🤝 Tie';
+      const winCls   = h.winner === 'orange' ? 'orange' : h.winner === 'purple' ? 'purple' : '';
+      const row = document.createElement('div');
+      row.className = 'sc-row';
+      row.innerHTML = `<span class="rnd">Round ${h.round}</span><span class="win ${winCls}">${winLabel}</span><span>${h.orange.toLocaleString()} – ${h.purple.toLocaleString()}</span>`;
+      rows.appendChild(row);
+    });
+  }
+
+  window.shareOnX = function() {
+    const ow = roundHistory.filter(h => h.winner === 'orange').length;
+    const pw = roundHistory.filter(h => h.winner === 'purple').length;
+
+    let lead = '';
+    if (ow > pw)      lead = `🦊 Sales leads ${ow}–${pw}`;
+    else if (pw > ow) lead = `🐯 Accounting leads ${pw}–${ow}`;
+    else if (ow === 0) lead = `No results yet — let the war begin!`;
+    else              lead = `Tied ${ow}–${pw} — anyone's game!`;
+
+    const lines = roundHistory.map(h => {
+      const w = h.winner === 'orange' ? '🦊 Sales' : h.winner === 'purple' ? '🐯 Acct' : '🤝 Tie';
+      return `R${h.round}: ${w} (${h.orange.toLocaleString()}–${h.purple.toLocaleString()})`;
+    });
+
+    const text = [
+      `⚔️ Enemies With Benefits — Click War`,
+      lead,
+      '',
+      ...lines,
+      '',
+      `#EnemiesWithBenefits #ClickWar #SyntaraOffice`
+    ].join('\n');
+
+    const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+    window.open(url, '_blank');
   };
 
 </script>
